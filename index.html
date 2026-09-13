@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday, Jean</title>
+<title>Happy Birthday Jean!</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap');
 
@@ -276,17 +276,18 @@
   </section>
 
   <section class="stage" id="stageGame">
-    <h2>ok wait, play this first</h2>
+    <h2>a quick minigame</h2>
     <p>find all the matching pairs</p>
     <div class="game-grid" id="gameGrid"></div>
     <div class="game-status" id="gameStatus">&nbsp;</div>
+    <button class="continue-btn" id="continueBtn">continue &rarr;</button>
   </section>
 
   <section class="stage" id="stageMessage">
     <div class="msg-inner">
       <div>
         <h1>Happy Birthday,<br>Jeany!</h1>
-        <p class="to-jeany">aka chikadorang jeany gurl</p>
+        <p class="to-jeany">aka. chikadorang jeany gurl</p>
       </div>
 
       <div>
@@ -295,11 +296,14 @@
           you're about to step into another stage in your life, and even
           though we don't talk and hangout as much as we used to (dahil
           mamamatay na tayo sa sobrang busy sa college), I still want to let
-          you know na I'm always here for you if need me, na I will always be
-          your friend and you will always be mine. Wish ko lang is mas
-          ma-enjoy mo tong araw na to and the following years to come. Live
-          life to its fullest, ika nga nila  Don't stress yourself too much,
-          na din mas nakakatanda yun te, matakot ka, HAHAHA. Loveuuuu! 
+          you know na I'm always here for you if you need me, na I will
+          always be your friend and you will always be mine. Wish ko lang is
+          for you to succeed in life, because I know how hardworking you are
+          and you deserve every recognition you get. I hope you'll get to
+          enjoy your special day and the following years to come. Live life
+          to its fullest, ika nga nila.
+          Don't stress yourself too much — mas nakakatanda yun, te, matakot
+          ka, HAHAHA. Loveuuuu!
         </p>
       </div>
 
@@ -315,7 +319,7 @@
       <p class="quiet-line">"For with God<br>nothing shall be<br>impossible."<br>— Luke 1:37</p>
 
       <div class="signature">
-        <div class="name">HAPPY BIRTHDAY, JEANY</div>
+        <div class="name">HAPPY BIRTHDAY, JEAN!</div>
       </div>
     </div>
   </section>
@@ -324,17 +328,9 @@
 
 <div class="wish-modal" id="wishModal">
   <div class="wish-card">
-    <h3>HAPPY BIRTHDAY<br>JEANY!</h3>
+    <h3>HAPPY BIRTHDAY<br>JEAN!</h3>
     <p>yieee 20 na siya</p>
     <button class="go-btn" id="wishClose">ok!</button>
-  </div>
-</div>
-
-<div class="wish-modal" id="gameModal">
-  <div class="wish-card">
-    <h3>you found them<br>all!</h3>
-    <p>pang pa gising na muna te</p>
-    <button class="go-btn" id="gameModalClose">ok!</button>
   </div>
 </div>
 
@@ -413,8 +409,7 @@
 
   const grid = document.getElementById('gameGrid');
   const status = document.getElementById('gameStatus');
-  const gameModal = document.getElementById('gameModal');
-  const gameModalClose = document.getElementById('gameModalClose');
+  const continueBtn = document.getElementById('continueBtn');
   let flippedCards = [];
   let lock = false;
   let matchedCount = 0;
@@ -449,7 +444,8 @@
         flippedCards = [];
         lock = false;
         if (matchedCount === symbols.length) {
-          setTimeout(() => gameModal.classList.add('show'), 400);
+          status.textContent = "you found them all!";
+          setTimeout(() => continueBtn.classList.add('show'), 400);
         }
       } else {
         setTimeout(() => {
@@ -503,10 +499,11 @@
     }
   });
 
-  gameModalClose.addEventListener('click', () => {
-    gameModal.classList.remove('show');
+  continueBtn.addEventListener('click', () => {
     showStage('message');
-
+    // best-effort autoplay — works once this page is served over
+    // https (e.g. GitHub Pages); if the browser blocks it, the
+    // play button above still works with a normal tap.
     if (spotifyController && !hasStartedTrack) {
       hasStartedTrack = true;
       spotifyController.play();
